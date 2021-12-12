@@ -11,6 +11,8 @@
     --text-color: #ff6a95;
     --text-color-2: #fff;
     --card-text-color: #333;
+
+    --hover-color: #614fd0;
 }
 
 * {
@@ -90,7 +92,7 @@ header {
   text-align: center;
   border-radius: 50%;
   font-size: 19px;
-  border: 1px #eee solid;
+  border: 1px #fff solid;
   transition: 0.3s;
 }
 
@@ -207,19 +209,20 @@ input:focus {
 }
 
 .about-link {
-  position: absolute;
-  bottom: 20px;
+  z-index: 99999;
+  position: fixed;
   right: 20px;
+  bottom: 20px;
   color: var(--text-color-2);
   cursor: pointer;
 }
 
 .about-link a {
-  color: var(--text-color-2);
+  color: var(--text-color);
 }
 
 .about-link a:hover {
-  color: #ff6a95;
+  opacity: .9;
 }
 
 .about h1 {
@@ -231,9 +234,11 @@ input:focus {
 }
 
 .about a {
-  color: var(--bg-color-2);
-  text-decoration: none;
-  text-transform: uppercase;
+  color: var(--text-color);
+}
+
+.about a:hover {
+  opacity: .9;
 }
 
 @media (max-width: 600px) {

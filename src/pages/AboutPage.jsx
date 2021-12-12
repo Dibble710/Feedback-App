@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Card from "../components/shared/Card";
+import { FaHome} from 'react-icons/fa'
 
 function AboutPage() {
   return <Card>
@@ -8,7 +9,9 @@ function AboutPage() {
       <p>This is a React app to leave feedback for a product or service.</p>
       <p>Version: 1.0.0</p>
       <p>
-        <Link to="/">Back To Home</Link>
+        <Link to="/">
+          <FaHome size={30}/>
+        </Link>
       </p>
     </div>
   </Card>;
