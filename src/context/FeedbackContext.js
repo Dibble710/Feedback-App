@@ -1,18 +1,16 @@
 import { createContext, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-
+import FeedbackData from "../data/feedbackData";
 
 const FeedbackContext = createContext();
 
 // ==== In order for components to gain access to state, we wrap everything inside of this provider ==== //
 export const FeedbackProvider = ({ children }) => {
-  const [feedback, setFeedback] = useState([
-    {
-      id: 1,
-      text: "This is feedback item 1",
-      rating: 10,
-    },
-  ]);
+  const [feedback, setFeedback] = useState(FeedbackData);
+  const [feedbackEdit, setFeedbackEdit] = useState({
+    item: {},
+    edit: false,
+  });
 
   const deleteFeedback = (id) => {
     if (window.confirm("Are you sure you want to delete this?")) {
@@ -25,12 +23,21 @@ export const FeedbackProvider = ({ children }) => {
     setFeedback([newFeedback, ...feedback]);
   };
 
+  const editFeedback = (item) => {
+    setFeedbackEdit({
+      item,
+      edit: true,
+    });
+  };
+
   return (
     <FeedbackContext.Provider
       value={{
         feedback,
         deleteFeedback,
-        addFeedback
+        addFeedback,
+        editFeedback,
+        feedbackEdit
       }}
     >
       {children}
