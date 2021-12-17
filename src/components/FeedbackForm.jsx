@@ -9,45 +9,57 @@ function FeedbackForm() {
   const [rating, setRating] = useState(5);
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [message, setMessage] = useState("");
-  
-  const { addFeedback, feedbackEdit } = useContext(FeedbackContext);
+
+  const { addFeedback, feedbackEdit, updateFeedbackItem, setFeedbackEdit } =
+    useContext(FeedbackContext);
 
   useEffect(() => {
     if (feedbackEdit.edit === true) {
-      setBtnDisabled(false)
-      setText(feedbackEdit.item.text)
-      setRating(feedbackEdit.item.rating)
+      setBtnDisabled(false);
+      setText(feedbackEdit.item.text);
+      setRating(feedbackEdit.item.rating);
     }
-  }, [feedbackEdit])
+  }, [feedbackEdit]);
 
   const handleTextChange = (e) => {
-    if (text === '') {
-        setBtnDisabled(true)
-        setMessage(null)
-    } else if(text !== '' && text.trim().length <= 10) {
-        setBtnDisabled(true)
-        setMessage('Text must be at least 10 characters')
+    if (text === "") {
+      setBtnDisabled(true);
+      setMessage(null);
+    } else if (text !== "" && text.trim().length <= 10) {
+      setBtnDisabled(true);
+      setMessage("Text must be at least 10 characters");
     } else {
-        setMessage(null)
-        setBtnDisabled(false)
+      setMessage(null);
+      setBtnDisabled(false);
     }
 
-    setText(e.target.value)
+    setText(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (text.trim().length > 10) {
-        const newFeedback = {
-            text,
-            rating
-        };
+      const newFeedback = {
+        text,
+        rating,
+      };
+
+      if (feedbackEdit.edit === true) {
+        updateFeedbackItem(feedbackEdit.item.id, newFeedback);
+      } else {
         addFeedback(newFeedback);
-        setText('');
+      }
+      setText("");
+      setBtnDisabled(true);
+      setFeedbackEdit({
+        item: {},
+        edit: false,
+      });
     }
-  }
+  };
 
   return (
+    
     <Card>
       <form onSubmit={handleSubmit}>
         <h2>How would you rate your service with us?</h2>
@@ -60,7 +72,7 @@ function FeedbackForm() {
             placeholder="Write a review"
             value={text}
           />
-          <Button type="submit" isDisabled={btnDisabled} >
+          <Button type="submit" isDisabled={btnDisabled}>
             Send
           </Button>
         </div>
